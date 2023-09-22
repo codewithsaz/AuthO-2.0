@@ -4,13 +4,13 @@ import useFetch from "../hooks/useFetch";
 
 const Login = () => {
   const { handleGoogle, loading, error } = useFetch(
-    "http://localhost:5152/login"
+    "http://localhost:8080/login"
   );
 
   useEffect(() => {
     if (window.google) {
       google.accounts.id.initialize({
-        client_id: import.meta.env.REACT_APP_GOOGLE_CLIENT_ID,
+        client_id: import.meta.env.VITE_REACT_APP_GOOGLE_CLIENT_ID,
         callback: handleGoogle,
       });
 
@@ -22,7 +22,7 @@ const Login = () => {
         shape: "pill",
       });
 
-      // google.accounts.id.prompt()
+      google.accounts.id.prompt();
     }
   }, [handleGoogle]);
 

@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { Landing, Login, Signup } from "./pages";
+import { Landing, Login, Signup, Home } from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState({});
+  useEffect(() => {
+    const theUser = localStorage.getItem("user");
 
+    if (theUser && !theUser.includes("undefined")) {
+      setUser(JSON.parse(theUser));
+    }
+  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +28,10 @@ function App() {
         <Route
           path="/login"
           element={user?.email ? <Navigate to="/home" /> : <Login />}
+        />
+        <Route
+          path="/home"
+          element={user?.email ? <Home user={user} /> : <Navigate to="/" />}
         />
       </Routes>
     </BrowserRouter>
